@@ -5,9 +5,9 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class HttpBinApi implements ICredentialType {
+export class OliveTinApi implements ICredentialType {
 	name = 'oliveTinApi';
-	displayName = 'OliveTin';
+	displayName = 'OliveTinAPI API';
 	documentationUrl = 'https://docs.olivetin.app';
 	properties: INodeProperties[] = [
 		{

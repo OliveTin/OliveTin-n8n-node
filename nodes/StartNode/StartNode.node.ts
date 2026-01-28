@@ -35,7 +35,7 @@ export class StartNode implements INodeType {
 				type: 'string',
 				default: '',
 				placeholder: 'date',
-				description: 'This is the value of the "id:" field for your action. It is *not* the Action tittle.',
+				description: 'This is the value of the "ID:" field for your action. It is *not* the Action tittle.',
 			},
 		],
 	};
