@@ -4,31 +4,38 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionType, NodeOperationError } from 'n8n-workflow';
+import { NodeOperationError } from 'n8n-workflow';
 
-export class ExampleNode implements INodeType {
+export class StartNode implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Example Node',
-		name: 'exampleNode',
+		displayName: 'Start Action',
+		name: 'startNode',
 		group: ['transform'],
 		version: 1,
-		description: 'Basic Example Node',
+		icon: { light: 'file:OliveTinLogo.svg', dark: 'file:OliveTinLogo.svg' },
+		description: 'Starts and OliveTin action',
 		defaults: {
-			name: 'Example Node',
+			name: 'Action1',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ["main"],
+		outputs: ["main"],
 		usableAsTool: true,
+		credentials: [
+			{
+				name: 'oliveTinApi',
+				required: true,
+			}
+		],
 		properties: [
 			// Node properties which the user gets displayed and
 			// can change on the node.
 			{
-				displayName: 'My String',
-				name: 'myString',
+				displayName: 'Action ID',
+				name: 'actionId',
 				type: 'string',
 				default: '',
-				placeholder: 'Placeholder value',
-				description: 'The description text',
+				placeholder: 'date',
+				description: 'This is the value of the "id:" field for your action. It is *not* the Action tittle.',
 			},
 		],
 	};
@@ -41,17 +48,18 @@ export class ExampleNode implements INodeType {
 		const items = this.getInputData();
 
 		let item: INodeExecutionData;
-		let myString: string;
+		let actionId: string;
 
 		// Iterates over all input items and add the key "myString" with the
 		// value the parameter "myString" resolves to.
 		// (This could be a different value for each item in case it contains an expression)
 		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
 			try {
-				myString = this.getNodeParameter('myString', itemIndex, '') as string;
+				actionId = this.getNodeParameter('actionId', itemIndex, '') as string;
 				item = items[itemIndex];
 
-				item.json.myString = myString;
+				item.json.actionId = actionId;
+				item.json.success = false;
 			} catch (error) {
 				// This node should never fail but we want to showcase how
 				// to handle errors.
