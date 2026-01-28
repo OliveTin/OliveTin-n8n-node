@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-olivetin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A n8n plugin for OliveTin",
   "keywords": [
     "n8n-community-node-package"
@@ -36,7 +36,7 @@
       "dist/credentials/OliveTinApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/StartNode/StartNode.node.js"
+      "dist/nodes/OliveTin/Olivetin.node.js"
     ]
   },
   "devDependencies": {

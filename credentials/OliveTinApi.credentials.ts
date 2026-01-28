@@ -1,50 +1,51 @@
-import {
+import type {
 	IAuthenticateGeneric,
+	Icon,
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
 } from 'n8n-workflow';
 
 export class OliveTinApi implements ICredentialType {
-	name = 'oliveTinApi';
-	displayName = 'OliveTinAPI API';
-	documentationUrl = 'https://docs.olivetin.app';
+	name = 'olivetinApi';
+
+	displayName = 'OliveTin API';
+
+	icon: Icon = { light: 'file:../icons/OliveTinLogo.svg', dark: 'file:../icons/OliveTinLogo.svg' };
+
+	documentationUrl =
+		'https://docs.olivetin.app/integrations/n8n.html';
+
 	properties: INodeProperties[] = [
 		{
-			displayName: 'Token',
-			name: 'token',
+			displayName: 'Access Token',
+			name: 'accessToken',
 			type: 'string',
+			typeOptions: { password: true },
 			default: '',
-			typeOptions: {
-				password: true,
-			}
 		},
 		{
-			displayName: 'Domain',
-			name: 'domain',
+			displayName: 'Sever address',
+			name: 'serverAddress',
 			type: 'string',
-			default: 'https://httpbin.org',
-		},
+			default: 'http://olivetin.example.com'
+		}
 	];
 
-	// This allows the credential to be used by other parts of n8n
-	// stating how this credential is injected as part of the request
-	// An example is the Http Request node that can make generic calls
-	// reusing this credential
 	authenticate: IAuthenticateGeneric = {
 		type: 'generic',
 		properties: {
 			headers: {
-				Authorization: '={{"Bearer " + $credentials.token}}',
+				Authorization: '=token {{$credentials?.accessToken}}',
 			},
 		},
 	};
 
-	// The block below tells how this credential can be tested
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: '={{$credentials?.domain}}',
-			url: '/bearer',
+			baseURL: '= {{$credentials.serverAddress}}/api/',
+			url: '/Init',
+			method: 'POST',
 		},
 	};
 }
