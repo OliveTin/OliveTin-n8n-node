@@ -51,12 +51,12 @@ export class Olivetin implements INodeType {
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const credentials = await this.getCredentials('olivetinApi');
-		console.info('Server Address:', credentials.serverAddress);
+		//console.info('Server Address:', credentials.serverAddress);
 
 		const requestData: StartActionRequest = {
 			bindingId: this.getNodeParameter('bindingId', 0) as string,
 		};
-		console.info('Request Data:', requestData);
+		//console.info('Request Data:', requestData);
 
 		const headers: Record<string, string> = {
 			'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export class Olivetin implements INodeType {
 			json: true
 		});
 
-		console.log('Response:', response);
+		//console.log('Response:', response);
 
 		const item: INodeExecutionData = {
 			json: {
